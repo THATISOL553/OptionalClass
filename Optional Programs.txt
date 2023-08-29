@@ -1,0 +1,163 @@
+// To use Optional Class we will create the customer class first(As below)
+---------------------------------------------------------------------------
+
+package com.optional;
+public class Customer {
+	int id;
+	String name;
+	String email;
+	//Customer Constructor
+	public Customer(int id, String name, String email) {
+		this.id = id;
+		this.name = name;
+		this.email = email;
+	}
+	
+	//Getter and Setter Methods for id, name, email.
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	
+	//toString() for Customer.
+	@Override
+	public String toString() {
+		return "Customer [id=" + id + ", name=" + name + ", email=" + email + "]";
+	}
+	
+}
+-----------------------------------------------------------------------------------------------------------------------
+// Java Code for Optional.of()
+----------------------------------
+package com.optional;
+
+import java.util.Optional;
+
+public class OptionalDemo {
+
+	public static void main(String[] args) {
+		Customer customer =new Customer(101, "shiva", "shiva.vtalent@gmail.com");
+		
+		Optional<String> emailOptional = Optional.of(customer.getEmail());
+		System.out.println(emailOptional);
+	}
+}
+
+Ooutput: Optional[shiva.vtalent@gmail.com]
+Note: If you are sure that the object you are passing is never null, then you should go for  Optional.of()
+------------------------------------------------------------------------------------------------------------------------
+// Java Code for Optional.ofNullable()
+---------------------------------------
+package com.optional;
+
+import java.util.Optional;
+
+public class OptionalDemo {
+
+	public static void main(String[] args) {
+		Customer customer =new Customer(101, "shiva", "xyz@gmail.com");
+		
+		Optional<String> emailOptional2 = Optional.ofNullable(customer.getEmail());
+		System.out.println(emailOptional2);
+	}
+}
+
+Output: Optional[xyz@gmail.com]
+Note1: If we replace "xyz@gmail.com" with null, we will get Optional.empty.
+Note2: If you are not sure that the object you are passing is null or not null, then you should go for  Optional.of()
+------------------------------------------------------------------------------------------------------------------------
+//Java Code by including isPresent and get()
+---------------------------------------------
+package com.optional;
+
+import java.util.Optional;
+
+public class OptionalDemo {
+
+	public static void main(String[] args) {
+		Customer customer =new Customer(101, "shiva", null);
+		
+		Optional<String> emailOptional2 = Optional.ofNullable(customer.getEmail());
+		if(emailOptional2.isPresent()) {
+			System.out.println(emailOptional2.get());
+		}
+		else {
+			System.out.println("No Email data found");
+		}
+	}
+}
+
+Output: No Email data found
+Note1: If we replace the null with some email id like "java23@vtalent.com", then we will get the output as java23@vtalent.com
+Note2: In this above code as part of default result, we can replace if-else statement with orElse() method (refer below code)
+--------------------------------------------------------------------------------------------------------------------------------
+//Java code for orElse() method to get default result
+-------------------------------------------------------
+package com.optional;
+
+import java.util.Optional;
+
+public class OptionalDemo {
+
+	public static void main(String[] args) {
+		Customer customer =new Customer(101, "shiva", null);
+		
+		Optional<String> emailOptional2 = Optional.ofNullable(customer.getEmail());
+			System.out.println(emailOptional2.orElse("default.vtalent.com"));
+	}
+}
+
+Output: default.vtalent.com
+Note1: If we replace null with java23@vtalent.com, the output we will get as java23@vtalent.com instead of default.vtalent.com
+-------------------------------------------------------------------------------------------------------------------------------
+//Java code to throw customized Exception using orElseThrow(Supplier) method
+-----------------------------------------------------------------------------
+package com.optional;
+
+import java.util.Optional;
+
+public class OptionalDemo {
+
+	public static void main(String[] args) {
+		Customer customer =new Customer(101, "shiva", null);
+		
+		Optional<String> emailOptional2 = Optional.ofNullable(customer.getEmail());
+			System.out.println(emailOptional2.orElseThrow(()-> new IllegalArgumentException("Email is not found")));
+	}
+}
+
+Output: Exception in thread "main" java.lang.IllegalArgumentException: Email is not found
+-------------------------------------------------------------------------------------------------------------------------------
+// Java Code to either modify the data using map() or print the alternate message using oeElseGet()
+----------------------------------------------------------------------------------------------------
+package com.optional;
+
+import java.util.Optional;
+
+public class OptionalDemo {
+
+	public static void main(String[] args) {
+		Customer customer =new Customer(101, "shiva", null);
+		
+		Optional<String> emailOptional2 = Optional.ofNullable(customer.getEmail());
+			System.out.println(emailOptional2.map(String::toUpperCase).orElseGet(()->"DEFAULT EMAIL"));
+	}
+}
+
+Output: DEFAULT EMAIL
+Note1: If we replace null with bestjava23batch@vtalent.com, then the output is BESTJAVA23BATCH@VTALENT.COM
+------------------------------------------------------------------------------------------------------------------------------
