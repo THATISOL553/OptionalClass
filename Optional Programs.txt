@@ -1,4 +1,4 @@
-// To use Optional Class we will create the customer class first(As below)
+// To use Optional Class we will create the customer class first (As below)
 ---------------------------------------------------------------------------
 
 package com.optional;
